@@ -38,7 +38,11 @@ async function signup(req, res) {
     return res.status(201).json({
       message: "User Registered Successfully",
       token,
-      user,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
     res.status(500).json({
@@ -72,7 +76,11 @@ async function login(req, res) {
 
     return res.status(200).json({
       token,
-      user,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+      },
     });
   } catch (error) {
     res.status(500).json({

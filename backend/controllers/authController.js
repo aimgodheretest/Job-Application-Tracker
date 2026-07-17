@@ -6,6 +6,13 @@ async function signup(req, res) {
   try {
     const { name, email, password } = req.body;
 
+    if (!name || !email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
+    }
+
     const existingUser = await User.findOne({
       where: {
         email,
@@ -34,7 +41,7 @@ async function signup(req, res) {
       user,
     });
   } catch (error) {
-    res.statu(500).json({
+    res.status(500).json({
       message: error.message,
     });
   }

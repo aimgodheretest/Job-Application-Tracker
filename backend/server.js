@@ -1,7 +1,17 @@
 require("dotenv").config();
 const app = require("./app");
 const sequelize = require("./config/db");
-require("./models/user");
+const User = require("./models/user");
+const Application = require("./models/application");
+
+User.hasMany(Application, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+});
+
+Application.belongsTo(User, {
+  foreignKey: "userId",
+});
 
 const PORT = process.env.PORT || 4000;
 console.log("PORT from env:", process.env.PORT);

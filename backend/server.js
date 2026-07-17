@@ -1,11 +1,12 @@
 require("dotenv").config();
-
 const app = require("./app");
 const sequelize = require("./config/db");
+require("./models/user");
 
 const PORT = process.env.PORT || 4000;
 console.log("PORT from env:", process.env.PORT);
 sequelize
+  // .sync({ alter: true })
   .authenticate()
   .then(() => {
     console.log(`DB Connected...`);

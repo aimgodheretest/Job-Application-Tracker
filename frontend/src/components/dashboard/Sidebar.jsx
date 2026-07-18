@@ -5,14 +5,35 @@ import {
   CalendarDays,
   Settings,
 } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 export default function Sidebar() {
   const menus = [
-    { name: "Dashboard", icon: LayoutDashboard },
-    { name: "Applications", icon: Briefcase },
-    { name: "Companies", icon: Building2 },
-    { name: "Interviews", icon: CalendarDays },
-    { name: "Settings", icon: Settings },
+    {
+      name: "Dashboard",
+      icon: LayoutDashboard,
+      path: "/dashboard",
+    },
+    {
+      name: "Applications",
+      icon: Briefcase,
+      path: "/applications",
+    },
+    {
+      name: "Companies",
+      icon: Building2,
+      path: "/companies",
+    },
+    {
+      name: "Interviews",
+      icon: CalendarDays,
+      path: "/interviews",
+    },
+    {
+      name: "Settings",
+      icon: Settings,
+      path: "/settings",
+    },
   ];
 
   return (
@@ -26,14 +47,20 @@ export default function Sidebar() {
           const Icon = item.icon;
 
           return (
-            <button
+            <NavLink
               key={item.name}
-              className="flex items-center gap-3 w-full px-4 py-3 rounded-xl hover:bg-blue-50 transition"
+              to={item.path}
+              className={({ isActive }) =>
+                `flex items-center gap-3 w-full px-4 py-3 rounded-xl transition ${
+                  isActive
+                    ? "bg-blue-100 text-blue-600 font-semibold"
+                    : "hover:bg-blue-50"
+                }`
+              }
             >
               <Icon size={20} />
-
               {item.name}
-            </button>
+            </NavLink>
           );
         })}
       </nav>

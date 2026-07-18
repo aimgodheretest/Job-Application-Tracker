@@ -3,6 +3,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import Login from "../pages/Login";
 import Signup from "../pages/Signup";
 import Dashboard from "../pages/Dashboard";
+import Applications from "../pages/Applications";
 
 export default function AppRoutes() {
   return (
@@ -18,6 +19,14 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <Dashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/applications"
+        element={
+          <ProtectedRoute>
+            <Applications />
           </ProtectedRoute>
         }
       />

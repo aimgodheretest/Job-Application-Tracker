@@ -53,6 +53,11 @@ async function getApplications(req, res) {
 
     //search
     const search = req.query.search || "";
+
+    //filtering
+    const status = req.query.status || "";
+    const jobType = req.query.jobType || "";
+
     const where = {
       userId: req.user.id,
     };
@@ -71,13 +76,21 @@ async function getApplications(req, res) {
         },
       ];
     }
+    //filtering
+    if (status) {
+      where.status = status;
+    }
+
+    if (jobType) {
+      where.jobType = jobType;
+    }
 
     const { count, rows } = await Application.findAndCountAll({
       where,
       limit,
       offset,
     });
-    
+
     const totalPages = Math.max(1, Math.ceil(count / limit));
     const pagination = {
       totalRecords: count,

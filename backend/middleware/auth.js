@@ -9,6 +9,12 @@ module.exports = (req, res, next) => {
     });
   }
 
+  if (!authHeader.startsWith("Bearer ")) {
+    return res.status(401).json({
+      message: "Invalid authorization format",
+    });
+  }
+
   const token = authHeader.split(" ")[1];
 
   try {

@@ -14,7 +14,6 @@ Application.belongsTo(User, {
 });
 
 const PORT = process.env.PORT || 4000;
-console.log("PORT from env:", process.env.PORT);
 sequelize
   // .sync({ alter: true })
   .authenticate()

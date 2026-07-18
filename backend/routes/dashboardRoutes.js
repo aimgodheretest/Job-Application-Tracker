@@ -6,7 +6,7 @@ const {
   getRecentApplications,
 } = require("../controllers/dashboardController");
 
-router.get("/stats", auth, getDashboardStats);
+router.get("/", auth, getDashboardStats);
 router.get("/recent", auth, getRecentApplications);
 
 module.exports = router;

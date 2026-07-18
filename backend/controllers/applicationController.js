@@ -58,6 +58,9 @@ async function getApplications(req, res) {
     const status = req.query.status || "";
     const jobType = req.query.jobType || "";
 
+    //Sorting
+    const sort = req.query.sort || "newest";
+
     const where = {
       userId: req.user.id,
     };
@@ -85,8 +88,38 @@ async function getApplications(req, res) {
       where.jobType = jobType;
     }
 
+    //Sorting[order array]
+    let order = [];
+
+    switch (sort) {
+      case "oldest":
+        order = [["createdAt", "ASC"]];
+        break;
+
+      case "company_asc":
+        order = [["company", "ASC"]];
+        break;
+
+      case "company_desc":
+        order = [["company", "DESC"]];
+        break;
+
+      case "salary_high":
+        order = [["salary", "DESC"]];
+        break;
+
+      case "salary_low":
+        order = [["salary", "ASC"]];
+        break;
+
+      case "newest":
+      default:
+        order = [["createdAt", "DESC"]];
+    }
+
     const { count, rows } = await Application.findAndCountAll({
       where,
+      order,
       limit,
       offset,
     });

@@ -46,16 +46,34 @@ async function createApplication(req, res) {
 
 async function getApplications(req, res) {
   try {
-    const applications = await Application.findAll({
+    const page = Number(req.query.page) || 1;
+    const limit = Number(req.query.limit) || 10;
+
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await Application.findAndCountAll({
       where: {
         userId: req.user.id,
       },
-      order: [["createdAt", "DESC"]],
+      limit,
+      offset,
     });
-
+    const totalPages = Math.max(1, Math.ceil(count / limit));
+    const pagination = {
+      totalRecords: count,
+      totalPages,
+      currentPage: page,
+      limit,
+      hasNextPage: page < totalPages,
+      hasPrevPage: page > 1,
+    };
     return res.status(200).json({
-      count: applications.length,
-      applications,
+      success: true,
+      message: "Applications fetched successfully",
+      data: {
+        applications: rows,
+        pagination,
+      },
     });
   } catch (error) {
     return res.status(500).json({

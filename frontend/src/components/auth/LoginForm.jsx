@@ -28,7 +28,7 @@ export default function LoginForm() {
   async function submitHandler(e) {
     e.preventDefault();
 
-    if (!form.email || !form.password) {
+    if (!form.email.trim() || !form.password.trim()) {
       return toast.error("Please fill all fields");
     }
 

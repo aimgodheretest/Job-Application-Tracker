@@ -1,5 +1,5 @@
+const { Op } = require("sequelize");
 const Application = require("../models/application");
-
 async function createApplication(req, res) {
   try {
     const {
@@ -46,18 +46,38 @@ async function createApplication(req, res) {
 
 async function getApplications(req, res) {
   try {
+    //pagination
     const page = Number(req.query.page) || 1;
     const limit = Number(req.query.limit) || 10;
-
     const offset = (page - 1) * limit;
 
+    //search
+    const search = req.query.search || "";
+    const where = {
+      userId: req.user.id,
+    };
+
+    if (search) {
+      where[Op.or] = [
+        {
+          company: {
+            [Op.like]: `%${search}%`,
+          },
+        },
+        {
+          position: {
+            [Op.like]: `%${search}%`,
+          },
+        },
+      ];
+    }
+
     const { count, rows } = await Application.findAndCountAll({
-      where: {
-        userId: req.user.id,
-      },
+      where,
       limit,
       offset,
     });
+    
     const totalPages = Math.max(1, Math.ceil(count / limit));
     const pagination = {
       totalRecords: count,

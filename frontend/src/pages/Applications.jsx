@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../layouts/DashboardLayout";
-import ApplicationTable from "../components/applications/ApplicationTable";
+import ApplicationTable from "../components/application/ApplicationTable";
 import {
   getApplications,
   createApplication,
   updateApplication,
   deleteApplication,
 } from "../services/applicationService";
-import ApplicationModal from "../components/applications/ApplicationModal";
-import ApplicationForm from "../components/applications/ApplicationForm";
-import DeleteModal from "./../components/applications/DeleteModal";
-import ApplicationFilters from "../components/applications/ApplicationFilters";
+import Modal from "../components/common/Modal";
+import ApplicationForm from "../components/application/ApplicationForm";
+import DeleteModal from "./../components/application/DeleteModal";
+import ApplicationFilters from "../components/application/ApplicationFilters";
 import Pagination from "../components/common/Pagination";
 import toast from "react-hot-toast";
 
@@ -179,7 +179,7 @@ export default function Applications() {
           <Pagination pagination={pagination} onPageChange={setPage} />
         </>
       )}
-      <ApplicationModal
+      <Modal
         isOpen={isModalOpen}
         onClose={() => {
           setEditingApplication(null);
@@ -199,7 +199,7 @@ export default function Applications() {
               : handleCreateApplication
           }
         />
-      </ApplicationModal>
+      </Modal>
       <DeleteModal
         isOpen={!!deleteId}
         onClose={() => setDeleteId(null)}

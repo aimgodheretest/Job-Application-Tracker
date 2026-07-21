@@ -1,4 +1,6 @@
 const Company = require("../models/company");
+const { Op } = require("sequelize");
+
 const createCompany = async (req, res) => {
   try {
     const {
@@ -43,17 +45,78 @@ const createCompany = async (req, res) => {
 
 const getAllCompanies = async (req, res) => {
   try {
-    const companies = await Company.findAll({
-      where: {
-        userId: req.user.id,
-      },
-      order: [["createdAt", "DESC"]],
+    const {
+      page = 1,
+      limit = 5,
+      search = "",
+      industry = "",
+      sort = "newest",
+    } = req.query;
+
+    const whereClause = {
+      userId: req.user.id,
+    };
+
+    if (search) {
+      whereClause[Op.or] = [
+        {
+          name: {
+            [Op.like]: `%${search}%`,
+          },
+        },
+        {
+          contactPerson: {
+            [Op.like]: `%${search}%`,
+          },
+        },
+      ];
+    }
+
+    if (industry) {
+      whereClause.industry = industry;
+    }
+
+    let order = [["createdAt", "DESC"]];
+
+    switch (sort) {
+      case "oldest":
+        order = [["createdAt", "ASC"]];
+        break;
+
+      case "name_asc":
+        order = [["name", "ASC"]];
+        break;
+
+      case "name_desc":
+        order = [["name", "DESC"]];
+        break;
+
+      default:
+        order = [["createdAt", "DESC"]];
+    }
+
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await Company.findAndCountAll({
+      where: whereClause,
+      order,
+      limit: Number(limit),
+      offset: Number(offset),
     });
 
     res.status(200).json({
       success: true,
-      count: companies.length,
-      companies,
+
+      companies: rows,
+
+      pagination: {
+        totalRecords: count,
+        totalPages: Math.ceil(count / limit),
+        currentPage: Number(page),
+        limit: Number(limit),
+        hasNextPage: Number(page) < Math.ceil(count / limit),
+        hasPrevPage: Number(page) > 1,
+      },
     });
   } catch (error) {
     console.error("Get Companies Error:", error);
@@ -64,6 +127,7 @@ const getAllCompanies = async (req, res) => {
     });
   }
 };
+
 const getCompanyById = async (req, res) => {
   try {
     const company = await Company.findOne({
@@ -93,6 +157,7 @@ const getCompanyById = async (req, res) => {
     });
   }
 };
+
 const updateCompany = async (req, res) => {
   try {
     const company = await Company.findOne({
@@ -125,6 +190,7 @@ const updateCompany = async (req, res) => {
     });
   }
 };
+
 const deleteCompany = async (req, res) => {
   try {
     const company = await Company.findOne({

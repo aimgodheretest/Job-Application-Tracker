@@ -2,6 +2,7 @@ const User = require("../models/user");
 const Application = require("../models/application");
 const Company = require("../models/company");
 const Interview = require("../models/interview");
+const Reminder = require("../models/reminder");
 
 // User -> Applications
 User.hasMany(Application, {
@@ -47,9 +48,34 @@ Interview.belongsTo(Application, {
   as: "application",
 });
 
+// User ↔ Reminder
+User.hasMany(Reminder, {
+  foreignKey: "userId",
+  as: "reminders",
+  onDelete: "CASCADE",
+});
+
+Reminder.belongsTo(User, {
+  foreignKey: "userId",
+  as: "user",
+});
+
+// Application ↔ Reminder
+Application.hasMany(Reminder, {
+  foreignKey: "applicationId",
+  as: "reminders",
+  onDelete: "CASCADE",
+});
+
+Reminder.belongsTo(Application, {
+  foreignKey: "applicationId",
+  as: "application",
+});
+
 module.exports = {
   User,
   Application,
   Company,
   Interview,
+  Reminder,
 };

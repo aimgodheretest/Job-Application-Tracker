@@ -5,6 +5,7 @@ import Signup from "../pages/Signup";
 import Dashboard from "../pages/Dashboard";
 import Applications from "../pages/Applications";
 import Companies from "../pages/Companies";
+import Interviews from "../pages/Interviews";
 
 export default function AppRoutes() {
   return (
@@ -36,6 +37,15 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <Companies />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/interviews"
+        element={
+          <ProtectedRoute>
+            <Interviews />
           </ProtectedRoute>
         }
       />

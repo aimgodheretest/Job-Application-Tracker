@@ -4,6 +4,7 @@ const Company = require("../models/company");
 const Interview = require("../models/interview");
 const Reminder = require("../models/reminder");
 const ApplicationDocument = require("../models/applicationDocument");
+const SavedJob = require("../models/savedJob");
 
 // User -> Applications
 User.hasMany(Application, {
@@ -85,6 +86,15 @@ ApplicationDocument.belongsTo(Application, {
   as: "application",
 });
 
+User.hasMany(SavedJob, {
+  foreignKey: "userId",
+  onDelete: "CASCADE",
+});
+
+SavedJob.belongsTo(User, {
+  foreignKey: "userId",
+});
+
 module.exports = {
   User,
   Application,
@@ -92,4 +102,5 @@ module.exports = {
   Interview,
   Reminder,
   ApplicationDocument,
+  SavedJob,
 };

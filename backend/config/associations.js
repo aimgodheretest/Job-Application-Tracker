@@ -3,6 +3,7 @@ const Application = require("../models/application");
 const Company = require("../models/company");
 const Interview = require("../models/interview");
 const Reminder = require("../models/reminder");
+const ApplicationDocument = require("../models/applicationDocument");
 
 // User -> Applications
 User.hasMany(Application, {
@@ -72,10 +73,23 @@ Reminder.belongsTo(Application, {
   as: "application",
 });
 
+// Application ↔ ApplicationDocument
+Application.hasMany(ApplicationDocument, {
+  foreignKey: "applicationId",
+  as: "documents",
+  onDelete: "CASCADE",
+});
+
+ApplicationDocument.belongsTo(Application, {
+  foreignKey: "applicationId",
+  as: "application",
+});
+
 module.exports = {
   User,
   Application,
   Company,
   Interview,
   Reminder,
+  ApplicationDocument,
 };

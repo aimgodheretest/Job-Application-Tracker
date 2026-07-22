@@ -3,6 +3,7 @@ import {
   Briefcase,
   Building2,
   CalendarDays,
+  Bell,
   Settings,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
@@ -28,6 +29,11 @@ export default function Sidebar() {
       name: "Interviews",
       icon: CalendarDays,
       path: "/interviews",
+    },
+    {
+      name: "Reminders",
+      icon: Bell,
+      path: "/reminders",
     },
     {
       name: "Settings",

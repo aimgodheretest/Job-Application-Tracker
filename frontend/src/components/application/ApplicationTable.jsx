@@ -1,4 +1,4 @@
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2, Paperclip } from "lucide-react";
 import { getStatusBadge } from "../../utils/statusBadge";
 
 export default function ApplicationTable({
@@ -6,6 +6,7 @@ export default function ApplicationTable({
   loading,
   onEdit,
   onDelete,
+  onDocuments,
 }) {
   if (loading) {
     return (
@@ -81,6 +82,13 @@ export default function ApplicationTable({
                       className="text-blue-600 hover:text-blue-800"
                     >
                       <Pencil size={18} />
+                    </button>
+                    <button
+                      onClick={() => onDocuments(application)}
+                      className="text-emerald-600 hover:text-emerald-800"
+                      title="Manage Documents"
+                    >
+                      <Paperclip size={18} />
                     </button>
 
                     <button

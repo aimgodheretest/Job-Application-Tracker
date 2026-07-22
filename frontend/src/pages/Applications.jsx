@@ -13,6 +13,7 @@ import DeleteModal from "./../components/application/DeleteModal";
 import ApplicationFilters from "../components/application/ApplicationFilters";
 import Pagination from "../components/common/Pagination";
 import toast from "react-hot-toast";
+import DocumentManager from "../components/application/DocumentManager";
 
 export default function Applications() {
   const [applications, setApplications] = useState([]);
@@ -29,6 +30,9 @@ export default function Applications() {
   const [jobTypeFilter, setJobTypeFilter] = useState("");
   const [sort, setSort] = useState("newest");
   const [page, setPage] = useState(1);
+
+  const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState(null);
 
   useEffect(() => {
     fetchApplications();
@@ -128,6 +132,11 @@ export default function Applications() {
       );
     }
   }
+
+  function handleDocuments(application) {
+    setSelectedApplication(application);
+    setIsDocumentModalOpen(true);
+  }
   return (
     <DashboardLayout>
       <div className="flex justify-between items-center mb-8">
@@ -174,6 +183,7 @@ export default function Applications() {
             loading={loading}
             onEdit={handleEdit}
             onDelete={handleDelete}
+            onDocuments={handleDocuments}
           />
 
           <Pagination pagination={pagination} onPageChange={setPage} />
@@ -200,6 +210,24 @@ export default function Applications() {
           }
         />
       </Modal>
+
+      <Modal
+        isOpen={isDocumentModalOpen}
+        onClose={() => {
+          setSelectedApplication(null);
+          setIsDocumentModalOpen(false);
+        }}
+        title={
+          selectedApplication
+            ? `${selectedApplication.company} Documents`
+            : "Documents"
+        }
+      >
+        {selectedApplication && (
+          <DocumentManager application={selectedApplication} />
+        )}
+      </Modal>
+
       <DeleteModal
         isOpen={!!deleteId}
         onClose={() => setDeleteId(null)}

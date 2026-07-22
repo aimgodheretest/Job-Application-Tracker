@@ -34,6 +34,16 @@ const Reminder = sequelize.define(
       type: DataTypes.ENUM("Pending", "Completed"),
       defaultValue: "Pending",
     },
+    notificationSent: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+
+    notificationSentAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   },
   {
     tableName: "reminders",

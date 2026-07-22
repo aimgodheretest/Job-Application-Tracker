@@ -1,9 +1,8 @@
 require("dotenv").config();
 const app = require("./app");
 const sequelize = require("./config/db");
-const User = require("./models/user");
-const Application = require("./models/application");
 require("./config/associations");
+const startReminderCron = require("./cron/reminderCron");
 
 const PORT = process.env.PORT || 4000;
 sequelize
@@ -12,6 +11,7 @@ sequelize
   .then(() => {
     console.log(`DB Connected...`);
     // Start the server ONLY after the DB connection is successful
+    startReminderCron();
     app.listen(PORT, () => {
       console.log(`Server is running on http://localhost:${PORT}`);
     });

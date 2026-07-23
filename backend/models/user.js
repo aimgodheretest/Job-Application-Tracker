@@ -33,12 +33,26 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
-
+    headline: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     careerGoal: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
-
+    experience: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    bio: {
+      type: DataTypes.TEXT,
+      allowNull: true,
+    },
     linkedin: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -48,8 +62,16 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
+    portfolio: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
 
     profileImage: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    resume: {
       type: DataTypes.STRING,
       allowNull: true,
     },

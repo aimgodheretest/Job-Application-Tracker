@@ -1,5 +1,5 @@
 const { Op } = require("sequelize");
-const Application = require("../models/application");
+const Application = require("../models/application.js");
 async function createApplication(req, res) {
   try {
     const {

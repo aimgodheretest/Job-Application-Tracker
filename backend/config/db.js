@@ -4,6 +4,14 @@ const path = require("path");
 
 require("dotenv").config();
 
+const sslConfig = process.env.AIVEN_CA_CERT
+  ? {
+      ca: process.env.AIVEN_CA_CERT,
+    }
+  : {
+      ca: fs.readFileSync(path.join(__dirname, "ca.pem")),
+    };
+
 const sequelize = new Sequelize(
   process.env.DB_NAME,
   process.env.DB_USER,
@@ -14,9 +22,7 @@ const sequelize = new Sequelize(
     dialect: "mysql",
 
     dialectOptions: {
-      ssl: {
-        rejectUnauthorized: true,
-      },
+      ssl: sslConfig,
     },
 
     logging: false,

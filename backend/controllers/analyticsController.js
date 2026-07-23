@@ -1,4 +1,4 @@
-const analyticsService = require("../services/analyticsService");
+const analyticsService = require("../services/analyticsService.js");
 
 exports.getOverview = async (req, res) => {
   try {

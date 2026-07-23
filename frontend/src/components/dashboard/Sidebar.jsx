@@ -7,6 +7,7 @@ import {
   Settings,
   Bookmark,
   UserCircle,
+  BarChart3,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -43,9 +44,9 @@ export default function Sidebar() {
       path: "/reminders",
     },
     {
-      name: "Profile",
-      icon: UserCircle,
-      path: "/profile",
+      name: "Analytics",
+      path: "/analytics",
+      icon: BarChart3,
     },
     {
       name: "Settings",

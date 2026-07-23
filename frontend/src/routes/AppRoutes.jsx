@@ -9,6 +9,7 @@ import Interviews from "../pages/Interviews";
 import Reminders from "../pages/Reminders";
 import SavedJobs from "../pages/SavedJobs";
 import Profile from "../pages/Profile";
+import AnalyticsDashboard from "../pages/AnalyticsDashboard";
 
 export default function AppRoutes() {
   return (
@@ -73,6 +74,14 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/analytics"
+        element={
+          <ProtectedRoute>
+            <AnalyticsDashboard />
           </ProtectedRoute>
         }
       />

@@ -7,6 +7,7 @@ import Applications from "../pages/Applications";
 import Companies from "../pages/Companies";
 import Interviews from "../pages/Interviews";
 import Reminders from "../pages/Reminders";
+import SavedJobs from "../pages/SavedJobs";
 
 export default function AppRoutes() {
   return (
@@ -55,6 +56,14 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <Reminders />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/saved-jobs"
+        element={
+          <ProtectedRoute>
+            <SavedJobs />
           </ProtectedRoute>
         }
       />

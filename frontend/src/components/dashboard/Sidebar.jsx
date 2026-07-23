@@ -5,6 +5,7 @@ import {
   CalendarDays,
   Bell,
   Settings,
+  Bookmark,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -19,6 +20,11 @@ export default function Sidebar() {
       name: "Applications",
       icon: Briefcase,
       path: "/applications",
+    },
+    {
+      name: "Saved Jobs",
+      icon: Bookmark,
+      path: "/saved-jobs",
     },
     {
       name: "Companies",

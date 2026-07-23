@@ -9,6 +9,7 @@ const reminderRoutes = require("./routes/reminderRoutes");
 const emailRoutes = require("./routes/emailRoutes");
 const documentRoutes = require("./routes/documentRoutes");
 const savedJobRoutes = require("./routes/savedJobRoutes");
+const profileRoutes = require("./routes/profileRoutes");
 
 const auth = require("./middleware/auth");
 const app = express();
@@ -27,11 +28,6 @@ app.use("/api/documents", documentRoutes);
 app.use("/api/email", emailRoutes);
 app.use("/api/saved-jobs", savedJobRoutes);
 
-app.use("/api/profile", auth, (req, res, next) => {
-  res.json({
-    message: "Protected Route",
-    user: req.user,
-  });
-});
+app.use("/api/profile", profileRoutes);
 
 module.exports = app;

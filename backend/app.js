@@ -12,6 +12,7 @@ const documentRoutes = require("./routes/documentRoutes");
 const savedJobRoutes = require("./routes/savedJobRoutes");
 const profileRoutes = require("./routes/profileRoutes");
 const analyticsRoutes = require("./routes/analyticsRoutes");
+const settingsRoutes = require("./routes/settingsRoutes");
 
 const auth = require("./middleware/auth");
 const app = express();
@@ -32,5 +33,6 @@ app.use("/api/email", emailRoutes);
 app.use("/api/saved-jobs", savedJobRoutes);
 app.use("/api/profile", profileRoutes);
 app.use("/api/analytics", analyticsRoutes);
+app.use("/api/settings", settingsRoutes);
 
 module.exports = app;

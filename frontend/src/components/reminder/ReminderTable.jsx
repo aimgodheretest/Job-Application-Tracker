@@ -1,22 +1,12 @@
+import ActionButton from "../common/ActionButton";
+import StatusBadge from "../common/StatusBadge";
+
 export default function ReminderTable({
   reminders,
   onEdit,
   onDelete,
   onComplete,
 }) {
-  function getStatusBadge(status) {
-    switch (status) {
-      case "Pending":
-        return "bg-yellow-100 text-yellow-700";
-
-      case "Completed":
-        return "bg-green-100 text-green-700";
-
-      default:
-        return "bg-gray-100 text-gray-700";
-    }
-  }
-
   if (!reminders.length) {
     return (
       <div className="bg-white rounded-xl shadow p-8 text-center">
@@ -36,7 +26,7 @@ export default function ReminderTable({
             <th className="px-5 py-3">Date</th>
             <th className="px-5 py-3">Time</th>
             <th className="px-5 py-3">Status</th>
-            <th className="px-5 py-3 text-center">Actions</th>
+            <th className="w-40 px-5 py-3 text-center">Actions</th>
           </tr>
         </thead>
 
@@ -56,39 +46,24 @@ export default function ReminderTable({
               <td className="px-5 py-4">{reminder.reminderTime}</td>
 
               <td className="px-5 py-4">
-                <span
-                  className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusBadge(
-                    reminder.status,
-                  )}`}
-                >
-                  {reminder.status}
-                </span>
+                <StatusBadge status={reminder.status} />
               </td>
 
               <td className="px-5 py-4">
-                <div className="flex justify-center gap-2">
+                <div className="flex items-center justify-center gap-2">
                   {reminder.status === "Pending" && (
-                    <button
+                    <ActionButton
+                      type="complete"
                       onClick={() => onComplete(reminder)}
-                      className="px-3 py-1 rounded bg-green-600 hover:bg-green-700 text-white"
-                    >
-                      Complete
-                    </button>
+                    />
                   )}
 
-                  <button
-                    onClick={() => onEdit(reminder)}
-                    className="px-3 py-1 rounded bg-yellow-500 hover:bg-yellow-600 text-white"
-                  >
-                    Edit
-                  </button>
+                  <ActionButton type="edit" onClick={() => onEdit(reminder)} />
 
-                  <button
+                  <ActionButton
+                    type="delete"
                     onClick={() => onDelete(reminder)}
-                    className="px-3 py-1 rounded bg-red-600 hover:bg-red-700 text-white"
-                  >
-                    Delete
-                  </button>
+                  />
                 </div>
               </td>
             </tr>

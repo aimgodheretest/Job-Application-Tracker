@@ -1,3 +1,6 @@
+import ActionButton from "../common/ActionButton";
+import StatusBadge from "../common/StatusBadge";
+
 export default function SavedJobTable({ savedJobs, onEdit, onDelete }) {
   if (savedJobs.length === 0) {
     return (
@@ -18,7 +21,7 @@ export default function SavedJobTable({ savedJobs, onEdit, onDelete }) {
             <th className="text-left p-4">Job Type</th>
             <th className="text-left p-4">Status</th>
             <th className="text-left p-4">Deadline</th>
-            <th className="text-center p-4">Actions</th>
+            <th className="w-40 text-center p-4">Actions</th>
           </tr>
         </thead>
 
@@ -33,7 +36,9 @@ export default function SavedJobTable({ savedJobs, onEdit, onDelete }) {
 
               <td className="p-4">{job.jobType}</td>
 
-              <td className="p-4">{job.status}</td>
+              <td className="p-4">
+                <StatusBadge status={job.status} />
+              </td>
 
               <td className="p-4">
                 {job.deadline
@@ -42,20 +47,13 @@ export default function SavedJobTable({ savedJobs, onEdit, onDelete }) {
               </td>
 
               <td className="p-4">
-                <div className="flex justify-center gap-2">
-                  <button
-                    onClick={() => onEdit(job)}
-                    className="px-3 py-1 rounded bg-yellow-500 text-white hover:bg-yellow-600"
-                  >
-                    Edit
-                  </button>
+                <div className="flex items-center justify-center gap-2">
+                  <ActionButton type="edit" onClick={() => onEdit(job)} />
 
-                  <button
+                  <ActionButton
+                    type="delete"
                     onClick={() => onDelete(job.id)}
-                    className="px-3 py-1 rounded bg-red-600 text-white hover:bg-red-700"
-                  >
-                    Delete
-                  </button>
+                  />
                 </div>
               </td>
             </tr>

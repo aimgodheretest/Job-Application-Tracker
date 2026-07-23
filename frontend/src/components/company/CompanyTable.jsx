@@ -1,4 +1,4 @@
-import { Pencil, Trash2 } from "lucide-react";
+import ActionButton from "../common/ActionButton";
 
 export default function CompanyTable({ companies, onEdit, onDelete }) {
   return (
@@ -11,7 +11,7 @@ export default function CompanyTable({ companies, onEdit, onDelete }) {
             <th className="text-left px-6 py-3">Location</th>
             <th className="text-left px-6 py-3">Contact</th>
             <th className="text-left px-6 py-3">Website</th>
-            <th className="text-center px-6 py-3">Actions</th>
+            <th className="w-40 text-center p-4">Actions</th>
           </tr>
         </thead>
 
@@ -57,20 +57,13 @@ export default function CompanyTable({ companies, onEdit, onDelete }) {
                 </td>
 
                 <td className="px-6 py-4">
-                  <div className="flex justify-center gap-3">
-                    <button
-                      onClick={() => onEdit(company)}
-                      className="text-blue-600 hover:text-blue-800"
-                    >
-                      <Pencil size={18} />
-                    </button>
+                  <div className="flex justify-center items-center gap-2">
+                    <ActionButton type="edit" onClick={() => onEdit(company)} />
 
-                    <button
+                    <ActionButton
+                      type="delete"
                       onClick={() => onDelete(company.id)}
-                      className="text-red-600 hover:text-red-800"
-                    >
-                      <Trash2 size={18} />
-                    </button>
+                    />
                   </div>
                 </td>
               </tr>

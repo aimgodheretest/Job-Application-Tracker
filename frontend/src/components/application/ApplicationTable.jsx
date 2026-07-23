@@ -1,5 +1,5 @@
-import { Pencil, Trash2, Paperclip } from "lucide-react";
-import { getStatusBadge } from "../../utils/statusBadge";
+import ActionButton from "../common/ActionButton";
+import StatusBadge from "../common/StatusBadge";
 
 export default function ApplicationTable({
   applications,
@@ -25,7 +25,7 @@ export default function ApplicationTable({
             <th className="text-left p-4">Position</th>
             <th className="text-left p-4">Status</th>
             <th className="text-left p-4">Applied Date</th>
-            <th className="text-left p-4">Actions</th>
+            <th className="w-40 text-center p-4">Actions</th>
           </tr>
         </thead>
 
@@ -55,13 +55,7 @@ export default function ApplicationTable({
                 <td className="p-4">{application.position}</td>
 
                 <td className="p-4">
-                  <span
-                    className={`px-3 py-1 rounded-full text-sm font-medium ${getStatusBadge(
-                      application.status,
-                    )}`}
-                  >
-                    {application.status}
-                  </span>
+                  <StatusBadge status={application.status} />
                 </td>
 
                 <td className="p-4">
@@ -76,27 +70,21 @@ export default function ApplicationTable({
                 </td>
 
                 <td className="p-4">
-                  <div className="flex items-center gap-3">
-                    <button
+                  <div className="flex items-center justify-center gap-2">
+                    <ActionButton
+                      type="edit"
                       onClick={() => onEdit(application)}
-                      className="text-blue-600 hover:text-blue-800"
-                    >
-                      <Pencil size={18} />
-                    </button>
-                    <button
-                      onClick={() => onDocuments(application)}
-                      className="text-emerald-600 hover:text-emerald-800"
-                      title="Manage Documents"
-                    >
-                      <Paperclip size={18} />
-                    </button>
+                    />
 
-                    <button
+                    <ActionButton
+                      type="document"
+                      onClick={() => onDocuments(application)}
+                    />
+
+                    <ActionButton
+                      type="delete"
                       onClick={() => onDelete(application.id)}
-                      className="text-red-600 hover:text-red-800"
-                    >
-                      <Trash2 size={18} />
-                    </button>
+                    />
                   </div>
                 </td>
               </tr>

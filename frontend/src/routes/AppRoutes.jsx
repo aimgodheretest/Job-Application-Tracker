@@ -10,6 +10,9 @@ import Reminders from "../pages/Reminders";
 import SavedJobs from "../pages/SavedJobs";
 import Profile from "../pages/Profile";
 import AnalyticsDashboard from "../pages/AnalyticsDashboard";
+import Settings from "../pages/Settings";
+import PrivacyPolicy from "../pages/PrivacyPolicy";
+import TermsAndConditions from "../pages/TermsAndConditions";
 
 export default function AppRoutes() {
   return (
@@ -82,6 +85,31 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <AnalyticsDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/privacy-policy"
+        element={
+          <ProtectedRoute>
+            <PrivacyPolicy />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/terms-and-conditions"
+        element={
+          <ProtectedRoute>
+            <TermsAndConditions />
           </ProtectedRoute>
         }
       />

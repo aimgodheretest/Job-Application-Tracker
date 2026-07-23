@@ -28,12 +28,27 @@ export function AuthProvider({ children }) {
     setUser(null);
   }
 
+  
+  function updateUser(updatedData) {
+    setUser((prev) => {
+      const newUser = {
+        ...prev,
+        ...updatedData,
+      };
+
+      localStorage.setItem("user", JSON.stringify(newUser));
+
+      return newUser;
+    });
+  }
+
   return (
     <AuthContext.Provider
       value={{
         user,
         login,
         logout,
+        updateUser,
         isAuthenticated: !!user,
       }}
     >

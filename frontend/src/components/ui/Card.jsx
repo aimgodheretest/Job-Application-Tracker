@@ -1,6 +1,8 @@
-export default function Card({ children }) {
+export default function Card({ children, className = "" }) {
   return (
-    <div className="relative z-20 rounded-3xl bg-white shadow-xl border border-gray-100 p-8">
+    <div
+      className={`rounded-2xl border border-gray-200 bg-white p-6 shadow-sm ${className}`}
+    >
       {children}
     </div>
   );

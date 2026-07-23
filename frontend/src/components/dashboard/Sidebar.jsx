@@ -6,6 +6,7 @@ import {
   Bell,
   Settings,
   Bookmark,
+  UserCircle,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -40,6 +41,11 @@ export default function Sidebar() {
       name: "Reminders",
       icon: Bell,
       path: "/reminders",
+    },
+    {
+      name: "Profile",
+      icon: UserCircle,
+      path: "/profile",
     },
     {
       name: "Settings",

@@ -8,6 +8,7 @@ import Companies from "../pages/Companies";
 import Interviews from "../pages/Interviews";
 import Reminders from "../pages/Reminders";
 import SavedJobs from "../pages/SavedJobs";
+import Profile from "../pages/Profile";
 
 export default function AppRoutes() {
   return (
@@ -64,6 +65,14 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <SavedJobs />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
           </ProtectedRoute>
         }
       />

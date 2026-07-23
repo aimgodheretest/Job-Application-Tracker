@@ -19,7 +19,7 @@ router.route("/").get(auth, getProfile).put(auth, updateProfile);
 router.post(
   "/image",
   auth,
-  upload.single("image"),
+  upload.single("profileImage"),
   uploadErrorHandler,
   uploadProfileImage,
 );

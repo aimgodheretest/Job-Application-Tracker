@@ -115,7 +115,7 @@ const uploadProfileImage = async (req, res) => {
     }
 
     await user.update({
-      profileImage: req.file.path,
+      profileImage: req.file.path.replace(/\\/g, "/"),
     });
 
     return res.status(200).json({
@@ -201,7 +201,7 @@ const uploadResume = async (req, res) => {
     }
 
     await user.update({
-      resume: req.file.path,
+      resume: req.file.path.replace(/\\/g, "/"),
     });
 
     return res.status(200).json({

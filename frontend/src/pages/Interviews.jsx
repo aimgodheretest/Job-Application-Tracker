@@ -65,9 +65,7 @@ export default function Interviews() {
       page: 1,
     }));
   }, [debouncedSearch]);
-  useEffect(() => {
-    console.log("Filters:", filters);
-  }, [filters]);
+  
   async function fetchInterviews() {
     try {
       setLoading(true);

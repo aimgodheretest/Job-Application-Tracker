@@ -10,21 +10,7 @@ export default function InterviewFilters({ filters, onChange, onReset }) {
 
   return (
     <div className="bg-white rounded-xl shadow p-5 mb-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {/* Search */}
-        <div>
-          <label className="block mb-2 font-medium">Search</label>
-
-          <input
-            type="text"
-            name="search"
-            placeholder="Interviewer or notes..."
-            value={filters.search}
-            onChange={handleChange}
-            className="w-full border rounded-lg px-4 py-2"
-          />
-        </div>
-
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4">
         {/* Status */}
         <div>
           <label className="block mb-2 font-medium">Status</label>

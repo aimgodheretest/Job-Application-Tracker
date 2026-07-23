@@ -1,6 +1,4 @@
 export default function SavedJobFilters({
-  search,
-  setSearch,
   statusFilter,
   setStatusFilter,
   jobTypeFilter,
@@ -10,19 +8,7 @@ export default function SavedJobFilters({
 }) {
   return (
     <div className="bg-white rounded-2xl shadow-sm border p-5 mb-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div>
-          <label className="block text-sm font-medium mb-2">Search</label>
-
-          <input
-            type="text"
-            placeholder="Search company or job title..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="w-full border rounded-lg px-4 py-2"
-          />
-        </div>
-
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         <div>
           <label className="block text-sm font-medium mb-2">Status</label>
 

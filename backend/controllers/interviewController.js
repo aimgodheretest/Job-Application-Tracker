@@ -158,6 +158,16 @@ const getAllInterviews = async (req, res) => {
             [Op.like]: `%${search}%`,
           },
         },
+        {
+          "$application.company$": {
+            [Op.like]: `%${search}%`,
+          },
+        },
+        {
+          "$application.position$": {
+            [Op.like]: `%${search}%`,
+          },
+        },
       ];
     }
 

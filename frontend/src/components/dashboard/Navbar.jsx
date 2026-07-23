@@ -1,15 +1,32 @@
+import { useSearch } from "../../context/SearchContext";
 import { LogOut, Bell, Search } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useEffect } from "react";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const searchPlaceholders = {
+    "/applications": "Search applications...",
+    "/companies": "Search companies...",
+    "/saved-jobs": "Search saved jobs...",
+    "/interviews": "Search interviews...",
+  };
+
+  const placeholder = searchPlaceholders[location.pathname] || "Search...";
+
   const { user, logout } = useAuth();
+  const { searchQuery, setSearchQuery, clearSearch } = useSearch();
 
   function handleLogout() {
     logout();
     navigate("/login");
   }
+
+  useEffect(() => {
+    clearSearch();
+  }, [location.pathname]);
 
   const BASE_URL = import.meta.env.VITE_API_URL.replace("/api", "");
 
@@ -26,14 +43,19 @@ export default function Navbar() {
     <header className="sticky top-0 z-40 flex items-center justify-between border-b border-gray-200 bg-white px-8 py-4">
       {/* Search */}
 
-      <div className="hidden md:flex items-center gap-3 rounded-xl border border-gray-300 px-4 py-2 w-full max-w-md">
-        <Search size={18} className="text-gray-500" />
+      {searchPlaceholders[location.pathname] && (
+        <div className="hidden md:flex items-center gap-3 rounded-xl border border-gray-300 px-4 py-2 w-full max-w-md">
+          <Search size={18} className="text-gray-500" />
 
-        <input
-          placeholder="Search..."
-          className="w-full bg-transparent outline-none"
-        />
-      </div>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder={placeholder}
+            className="w-full bg-transparent outline-none"
+          />
+        </div>
+      )}
 
       {/* Right */}
 

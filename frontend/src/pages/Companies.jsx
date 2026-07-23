@@ -8,7 +8,7 @@ import CompanyFilters from "../components/company/CompanyFilters";
 import Modal from "../components/common/Modal";
 import DeleteModal from "../components/application/DeleteModal";
 import Pagination from "../components/common/Pagination";
-
+import { useSearch } from "../context/SearchContext";
 import toast from "react-hot-toast";
 
 import {
@@ -19,6 +19,7 @@ import {
 } from "../services/companyService";
 
 export default function Companies() {
+  const { searchQuery } = useSearch();
   const [companies, setCompanies] = useState([]);
   const [pagination, setPagination] = useState({});
   const [loading, setLoading] = useState(true);
@@ -27,7 +28,6 @@ export default function Companies() {
   const [editingCompany, setEditingCompany] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
-  const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
   const [industryFilter, setIndustryFilter] = useState("");
@@ -42,11 +42,15 @@ export default function Companies() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedSearch(search);
+      setDebouncedSearch(searchQuery);
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [search]);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch]);
 
   async function fetchCompanies() {
     try {
@@ -147,8 +151,6 @@ export default function Companies() {
       </div>
 
       <CompanyFilters
-        search={search}
-        setSearch={setSearch}
         industryFilter={industryFilter}
         setIndustryFilter={setIndustryFilter}
         sort={sort}

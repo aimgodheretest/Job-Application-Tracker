@@ -16,8 +16,10 @@ import Modal from "../components/common/Modal";
 import DeleteModal from "../components/application/DeleteModal";
 import Pagination from "../components/common/Pagination";
 import DashboardLayout from "../layouts/DashboardLayout";
+import { useSearch } from "../context/SearchContext";
 
 export default function Interviews() {
+  const { searchQuery } = useSearch();
   const [interviews, setInterviews] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -29,7 +31,6 @@ export default function Interviews() {
   const [deleteInterviewData, setDeleteInterviewData] = useState(null);
 
   const [pagination, setPagination] = useState({});
-
   const defaultFilters = {
     page: 1,
     limit: 5,
@@ -43,11 +44,30 @@ export default function Interviews() {
   };
 
   const [filters, setFilters] = useState(defaultFilters);
+  const [debouncedSearch, setDebouncedSearch] = useState("");
 
   useEffect(() => {
     fetchInterviews();
   }, [filters]);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(searchQuery);
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    setFilters((prev) => ({
+      ...prev,
+      search: debouncedSearch,
+      page: 1,
+    }));
+  }, [debouncedSearch]);
+  useEffect(() => {
+    console.log("Filters:", filters);
+  }, [filters]);
   async function fetchInterviews() {
     try {
       setLoading(true);

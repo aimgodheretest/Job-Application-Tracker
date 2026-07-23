@@ -14,8 +14,11 @@ import ApplicationFilters from "../components/application/ApplicationFilters";
 import Pagination from "../components/common/Pagination";
 import toast from "react-hot-toast";
 import DocumentManager from "../components/application/DocumentManager";
+import { useSearch } from "../context/SearchContext";
 
 export default function Applications() {
+  const { searchQuery } = useSearch();
+
   const [applications, setApplications] = useState([]);
   const [pagination, setPagination] = useState({});
   const [loading, setLoading] = useState(true);
@@ -24,8 +27,6 @@ export default function Applications() {
   const [editingApplication, setEditingApplication] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
-  const [search, setSearch] = useState("");
-  const [debouncedSearch, setDebouncedSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [jobTypeFilter, setJobTypeFilter] = useState("");
   const [sort, setSort] = useState("newest");
@@ -34,17 +35,23 @@ export default function Applications() {
   const [isDocumentModalOpen, setIsDocumentModalOpen] = useState(false);
   const [selectedApplication, setSelectedApplication] = useState(null);
 
+  const [debouncedSearch, setDebouncedSearch] = useState("");
+
   useEffect(() => {
     fetchApplications();
   }, [page, debouncedSearch, statusFilter, jobTypeFilter, sort]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedSearch(search);
+      setDebouncedSearch(searchQuery);
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [search]);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch]);
 
   async function fetchApplications() {
     try {
@@ -159,8 +166,6 @@ export default function Applications() {
         </button>
       </div>
       <ApplicationFilters
-        search={search}
-        setSearch={setSearch}
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
         jobTypeFilter={jobTypeFilter}
@@ -168,6 +173,7 @@ export default function Applications() {
         sort={sort}
         setSort={setSort}
       />
+
       {loading ? (
         <div className="bg-white dark:bg-gray-900 rounded-xl shadow border p-6 animate-pulse">
           <div className="h-6 w-1/4 bg-gray-300 rounded mb-6"></div>

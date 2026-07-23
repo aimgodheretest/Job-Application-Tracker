@@ -13,8 +13,10 @@ import DeleteModal from "../components/application/DeleteModal";
 import SavedJobFilters from "../components/savedJob/SavedJobFilters";
 import Pagination from "../components/common/Pagination";
 import toast from "react-hot-toast";
+import { useSearch } from "../context/SearchContext";
 
 export default function SavedJobs() {
+  const { searchQuery } = useSearch();
   const [savedJobs, setSavedJobs] = useState([]);
   const [pagination, setPagination] = useState({});
   const [loading, setLoading] = useState(true);
@@ -23,7 +25,6 @@ export default function SavedJobs() {
   const [editingSavedJob, setEditingSavedJob] = useState(null);
   const [deleteId, setDeleteId] = useState(null);
 
-  const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("");
   const [jobTypeFilter, setJobTypeFilter] = useState("");
@@ -36,11 +37,15 @@ export default function SavedJobs() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setDebouncedSearch(search);
+      setDebouncedSearch(searchQuery);
     }, 500);
 
     return () => clearTimeout(timer);
-  }, [search]);
+  }, [searchQuery]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedSearch]);
 
   async function fetchSavedJobs() {
     try {
@@ -151,8 +156,6 @@ export default function SavedJobs() {
       </div>
 
       <SavedJobFilters
-        search={search}
-        setSearch={setSearch}
         statusFilter={statusFilter}
         setStatusFilter={setStatusFilter}
         jobTypeFilter={jobTypeFilter}

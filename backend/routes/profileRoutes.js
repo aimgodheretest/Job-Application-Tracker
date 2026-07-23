@@ -5,6 +5,9 @@ const {
   getProfile,
   updateProfile,
   uploadProfileImage,
+  deleteProfileImage,
+  uploadResume,
+  deleteResume,
 } = require("../controllers/profileController");
 
 const auth = require("../middleware/auth");
@@ -20,5 +23,17 @@ router.post(
   uploadErrorHandler,
   uploadProfileImage,
 );
+
+router.delete("/image", auth, deleteProfileImage);
+
+router.post(
+  "/resume",
+  auth,
+  upload.single("resume"),
+  uploadErrorHandler,
+  uploadResume,
+);
+
+router.delete("/resume", auth, deleteResume);
 
 module.exports = router;

@@ -2,18 +2,29 @@ const multer = require("multer");
 const path = require("path");
 
 // Allowed file types
-const allowedMimeTypes = [
+const documentMimeTypes = [
   "application/pdf",
   "application/msword",
   "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 ];
 
+const imageMimeTypes = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
+
 // Dynamic destination based on document type
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
+    const url = req.originalUrl;
     const { documentType } = req.body;
 
     let folder = "uploads/others";
+
+    if (url.includes("/profile/image")) {
+      return cb(null, "uploads/profileImages");
+    }
+
+    if (url.includes("/profile/resume")) {
+      return cb(null, "uploads/profileResumes");
+    }
 
     switch (documentType) {
       case "Resume":
@@ -48,11 +59,21 @@ const storage = multer.diskStorage({
 
 // File validation
 const fileFilter = (req, file, cb) => {
-  if (allowedMimeTypes.includes(file.mimetype)) {
+  const url = req.originalUrl;
+
+  if (url.includes("/profile/image")) {
+    if (imageMimeTypes.includes(file.mimetype)) {
+      return cb(null, true);
+    }
+
+    return cb(new Error("Only JPG, PNG and WEBP images are allowed."));
+  }
+
+  if (documentMimeTypes.includes(file.mimetype)) {
     return cb(null, true);
   }
 
-  cb(new Error("Only PDF, DOC and DOCX files are allowed."));
+  return cb(new Error("Only PDF, DOC and DOCX files are allowed."));
 };
 
 const upload = multer({

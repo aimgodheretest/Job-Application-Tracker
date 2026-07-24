@@ -1,4 +1,3 @@
-import ThemeToggle from "../components/common/ThemeToggle";
 import Logo from "../components/common/Logo";
 
 export default function AuthLayout({ children }) {
@@ -9,10 +8,6 @@ export default function AuthLayout({ children }) {
       <div className="pointer-events-none absolute w-96 h-96 bg-blue-200 rounded-full blur-3xl opacity-40 -top-20 -left-20" />
 
       <div className="pointer-events-none absolute w-96 h-96 bg-purple-200 rounded-full blur-3xl opacity-40 bottom-0 right-0" />
-
-      <div className="absolute right-8 top-8">
-        <ThemeToggle />
-      </div>
 
       <div className="max-w-7xl mx-auto min-h-screen flex items-center">
         {/* Left */}
